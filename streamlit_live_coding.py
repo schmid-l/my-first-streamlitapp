@@ -104,7 +104,7 @@ countries = json.load(file)
 
 df = pd.read_csv("data/share-of-individuals-using-the-internet.csv")
 df.head()
-df.rename(columns = {"Individuals using the Internet (% of population)" : "Internet usage" }, inplace = True)
+# df.rename(columns = {"Individuals using the Internet (% of population)" : "Internet usage" }, inplace = True)
 
 # check for one year
 df_2010 = df[df["Year"] == 2010]
@@ -112,7 +112,11 @@ df_2010 = df_2010.dropna(subset=['Code'])
 df_2010.head()
 
 
-fig = px.choropleth_mapbox(df_2010, geojson=countries, featureidkey = 'properties.ISO_A3', locations='Code', color='Individuals using the Internet (% of population)',
+fig1 = px.choropleth_mapbox(df_2010,
+                           geojson=countries, 
+                           featureidkey = 'properties.ISO_A3', 
+                           locations='Code', 
+                           color='Individuals using the Internet (% of population)',
                            color_continuous_scale="Viridis",
                            range_color=(df_2010["Individuals using the Internet (% of population)"].min(), df_2010["Individuals using the Internet (% of population)"].max()),
                            mapbox_style="carto-positron",
@@ -120,10 +124,10 @@ fig = px.choropleth_mapbox(df_2010, geojson=countries, featureidkey = 'propertie
                            opacity=0.5
                           )
 
-fig.update_layout(height = 750, width = 1300)
+fig1.update_layout(height = 750, width = 1300)
 
 
-st.plotly_chart(fig)
+st.plotly_chart(fig1)
 
 
 # Sample Choropleth mapbox using Plotly GO
